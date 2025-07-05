@@ -38,7 +38,6 @@ requests==2.32.4
 requests-oauthlib==2.0.0
 rsa==4.9.1
 six==1.17.0
-Telethon==1.40.0
 typing-inspection==0.4.1
 typing_extensions==4.14.0
 tzdata==2025.2

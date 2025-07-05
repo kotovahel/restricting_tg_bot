@@ -23,36 +23,18 @@ def register_handlers(dp: Dispatcher):
     async def show_help(message: types.Message):
         help_text = (
             "<b>Available commands:</b>\n\n"
-            "/getchatid — Get the chat ID (use command in the group chat!)\n"
+            "/get_chatid — Get the chat ID (use command in the group chat!)\n"
             "/delete — Delete a message\n"
             "/restrict — Restrict a user from sending messages\n"
-            "/addadmins — Add hidden admin to the trusted list\n"
-            "/addoldmembers — Add old members to Google Sheets\n"
+            "/add_admins — Add hidden admin to the trusted list\n"
         )
         await message.reply(help_text, parse_mode="HTML")
 
-    # get chat id by command '/getchatid' in chat
-    @dp.message(Command("getchatid"))
+    # get chat id by command '/get_chatid' in chat
+    @dp.message(Command("get_chatid"))
     async def get_chat_id(message: types.Message):
         chat_id = message.chat.id
         await message.reply(f"Group ID: {chat_id}")
-
-    # add old members to Google Sheets
-    @dp.message(Command("addoldmembers"))
-    async def add_old_members(message: types.Message):
-        # check access
-        sender_username = message.from_user.username
-        if not sender_username or sender_username.lstrip("@") not in load_allowed_usernames():
-            await message.reply("⛔ You do not have access to this command.")
-            return
-        from app.src.tgbot.tg_telethon import get_old_members
-        members = await get_old_members()
-        sa.save_user_to_sheets(SPREADSHEET_ID, members)
-
-        if members and len(members) > 0:
-            await message.reply(f"Number of old members: {len(members)}")
-        else:
-            await message.reply("No old members found.")
 
     # delete message by message ID (access for allowed users)
     @dp.message(F.text.startswith("/delete"))
@@ -73,7 +55,7 @@ def register_handlers(dp: Dispatcher):
         except Exception as e:
             await message.reply(f"❌ Failed to delete message: {e}")
 
-    # restrict member by user ID (access for allowed users)
+    # restrict member by username (access for allowed users)
     @dp.message(F.text.startswith("/restrict"))
     async def restrict_user_by_username(message: types.Message):
         # check access
@@ -99,7 +81,7 @@ def register_handlers(dp: Dispatcher):
             await message.reply(f"❌ Error restricting user: {e}")
 
     # add admins username to allowed_usernames
-    @dp.message(F.text.startswith("/addadmins"))
+    @dp.message(F.text.startswith("/add_admins"))
     async def add_usernames(message: Message):
         sender_username = message.from_user.username
 
