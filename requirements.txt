@@ -8,6 +8,7 @@ attrs==25.3.0
 cachetools==5.5.2
 certifi==2025.6.15
 charset-normalizer==3.4.2
+flake8==7.3.0
 frozenlist==1.7.0
 google-api-core==2.25.1
 google-api-python-client==2.174.0
@@ -19,6 +20,7 @@ gspread==6.2.1
 httplib2==0.22.0
 idna==3.10
 magic-filter==1.0.12
+mccabe==0.7.0
 multidict==6.6.3
 numpy==2.3.1
 oauthlib==3.3.1
@@ -29,8 +31,10 @@ protobuf==6.31.1
 pyaes==1.6.1
 pyasn1==0.6.1
 pyasn1_modules==0.4.2
+pycodestyle==2.14.0
 pydantic==2.11.7
 pydantic_core==2.33.2
+pyflakes==3.4.0
 pyparsing==3.2.3
 python-dateutil==2.9.0.post0
 pytz==2025.2

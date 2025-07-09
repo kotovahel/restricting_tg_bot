@@ -4,7 +4,7 @@ import logging
 from pathlib import Path
 
 # [Dirs]
-BASE_DIR = Path('../').absolute().resolve()
+BASE_DIR = Path('./').absolute().resolve()
 DATA_DIR = BASE_DIR.joinpath('data').absolute().resolve()
 TEMP_DIR = BASE_DIR.joinpath('temp').absolute().resolve()
 

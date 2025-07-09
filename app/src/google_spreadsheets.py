@@ -1,13 +1,13 @@
 import json
 import logging
+from datetime import datetime
 
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 
 import pandas as pd
-from datetime import datetime
 
-from app.src.utils import LOG_LEVEL
+from src.utils import LOG_LEVEL
 
 logger = logging.getLogger(__name__)
 logger.setLevel(LOG_LEVEL)
@@ -139,8 +139,3 @@ class ServiceAccount:
         df['restricted'] = df['restricted'].astype(str)
         self.write_spreadsheet(spreadsheet_id, df)
         return set(df[df['restricted'] == '1']['id'].astype(int).tolist())
-
-
-
-
-

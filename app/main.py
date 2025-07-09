@@ -1,10 +1,12 @@
-# import os
+import os
+
 import asyncio
-from tgbot.bot import run_bot
-from app.src.checkers.restricted import check_restricted_users
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-# os.chdir(os.path.dirname(os.path.abspath(__file__)))
+from src.tgbot.bot import run_bot
+from src.restricted import check_restricted_users
+from src.tgbot.loader import bot
 
 
 async def periodic_check():
@@ -12,7 +14,7 @@ async def periodic_check():
     Check restricted users every 5 seconds
     """
     while True:
-        await check_restricted_users()
+        await check_restricted_users(bot)
         await asyncio.sleep(5)
 
 
@@ -25,9 +27,9 @@ async def main():
         periodic_check()
     )
 
+
 if __name__ == '__main__':
     try:
         asyncio.run(main())
     except Exception as ex:
         print(ex)
-
