@@ -1,24 +1,21 @@
 from aiogram.types import ChatPermissions
 
-from app.src.google_sheets.google_spreadsheets import ServiceAccount
-from app.src.utils import SERVICE_ACCOUNT_CREDENTIALS, SCOPES
-from app.src.config import SPREADSHEET_ID, GROUP_CHAT_ID
-
+from config import SPREADSHEET_ID, GROUP_CHAT_ID
+from src.utils import SERVICE_ACCOUNT_CREDENTIALS, SCOPES
+from src.google_spreadsheets import ServiceAccount
 
 sa = ServiceAccount(SERVICE_ACCOUNT_CREDENTIALS, SCOPES, 'sheets', 'v4')
 
 restricted_cache = set()
 
 
-async def check_restricted_users():
+async def check_restricted_users(bot):
     """
     Background check of restricted users every 5 seconds.
     If a user is added to restricted, he will be restricted in the group.
     If removed from restricted, restrictions will be removed.
     """
     global restricted_cache
-
-    from app.src.tgbot.loader import bot
 
     try:
         current_restricted = sa.get_restricted_user_ids(SPREADSHEET_ID)
