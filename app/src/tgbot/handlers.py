@@ -39,7 +39,7 @@ def save_usernames(usernames):
 def is_allowed_user(username: str) -> bool:
     if not username:
         return False
-    return username.lstrip("@") in load_allowed_usernames()
+    return username.lstrip("@").lower() in load_allowed_usernames()
 
 
 def admin_only(handler):
@@ -282,7 +282,7 @@ def register_handlers(dp: Dispatcher):
     async def process_restrict_username(message: Message, state: FSMContext):
 
         target_username = message.text.strip().lstrip("@")
-        if not target_username.isalnum():
+        if " " in target_username:
             await message.reply("❗ Please enter a valid username.")
             return
 
